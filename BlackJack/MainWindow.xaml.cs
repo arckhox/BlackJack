@@ -23,6 +23,8 @@ namespace BlackJack
         public MainWindow()
         {
             InitializeComponent();
+            int deckCount = 1;
+            Deck deck = new Deck(deckCount);
         }
     }
 }
