@@ -20,11 +20,25 @@ namespace BlackJack
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Game blackJack;
         public MainWindow()
         {
             InitializeComponent();
             int deckCount = 1;
-            Deck deck = new Deck(deckCount);
+            blackJack = new Game(deckCount);
+            blackJack.initiateGame();
+        }
+
+        private void dealButton_Click(object sender, RoutedEventArgs e)
+        {
+            dealerListView.Items.Add(blackJack.pickCardForDealer());
+            playerListView.Items.Add(blackJack.pickCardForPlayer());
+            playerListView.Items.Add(blackJack.pickCardForPlayer());
+            playerScoreLabel.Content = blackJack.getPlayerScore();
+            dealerScoreLabel.Content = blackJack.getDealerScore();
+            dealButton.IsEnabled = false;
+            hitButton.IsEnabled = true;
+            standButton.IsEnabled = true;
         }
     }
 }

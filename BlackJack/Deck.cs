@@ -68,5 +68,9 @@ namespace BlackJack
             cards.RemoveAt(0);
             return cardToReturn;
         }
+        public int getDeckCount()
+        {
+            return deckCount;
+        }
     }
 }
