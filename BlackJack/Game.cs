@@ -13,7 +13,6 @@ namespace BlackJack
         private int dealerScore;
         private List<Card> playersCards;
         private List<Card> dealersCards;
-        private bool isPlayersTurn; //to know when to give cards to the player and when to the dealer
 
         public Game(int deckCount) // main constructor
         {
@@ -22,13 +21,11 @@ namespace BlackJack
             dealerScore = 0;
             playersCards = new List<Card>();
             dealersCards = new List<Card>();
-            isPlayersTurn = false;
         }
 
         public void initiateGame()
         {
             resetData();
-            isPlayersTurn= true;
         }
 
         public string pickCardForPlayer()
@@ -59,7 +56,6 @@ namespace BlackJack
             dealerScore = 0;
             playersCards.Clear();
             dealersCards.Clear();
-            isPlayersTurn = false;
             int deckCount = deck.getDeckCount();
             deck = new Deck(deckCount);
         }

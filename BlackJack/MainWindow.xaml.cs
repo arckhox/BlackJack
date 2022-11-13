@@ -40,5 +40,59 @@ namespace BlackJack
             hitButton.IsEnabled = true;
             standButton.IsEnabled = true;
         }
+
+        private void hitButton_Click(object sender, RoutedEventArgs e)
+        {
+            playerListView.Items.Add(blackJack.pickCardForPlayer());
+            playerScoreLabel.Content = blackJack.getPlayerScore();
+            if (blackJack.getPlayerScore() > 21)
+            {
+                hitButton.IsEnabled = false;
+                standButton.IsEnabled = false;
+                gameLost();
+            }
+        }
+
+        private void standButton_Click(object sender, RoutedEventArgs e)
+        {
+            while (blackJack.getDealerScore() < 16)
+            {
+                dealerListView.Items.Add(blackJack.pickCardForDealer());
+            }
+            dealerScoreLabel.Content = blackJack.getDealerScore();
+            if (blackJack.getDealerScore() > 21)
+            {
+                gameWon();
+            }
+            else if (blackJack.getDealerScore() > blackJack.getPlayerScore())
+            {
+                gameLost();
+            }
+            else
+            {
+                gameWon();
+            }
+            hitButton.IsEnabled = false;
+            standButton.IsEnabled = false;
+        }
+        private void gameLost()
+        {
+            statusTextLabel.Content = "Round Lost!";
+            restartGame();
+        }
+        private void gameWon()
+        {
+            statusTextLabel.Content = "Round Won!";
+            restartGame();
+        }
+        private void restartGame()
+        {
+            blackJack.initiateGame();
+            dealButton.IsEnabled = true;
+            hitButton.IsEnabled = false;
+            standButton.IsEnabled = false;
+            dealerListView.Items.Clear();
+            playerListView.Items.Clear();
+        }
     }
 }

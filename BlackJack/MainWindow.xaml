@@ -8,7 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
@@ -36,9 +37,10 @@
         
         <WrapPanel Orientation="Horizontal" Grid.Row="1" Background="#FF191919">
             <Button x:Name="dealButton" Margin="30" Content="Deal" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="dealButton_Click"/>
-            <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False"/>
-            <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False"/>
+            <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False" Click="hitButton_Click"/>
+            <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False" Click="standButton_Click"/>
         </WrapPanel>
+        <Label x:Name="statusTextLabel" Grid.Row="2" Content="Round Started" HorizontalContentAlignment="center" VerticalContentAlignment="center" Background="#FF371515" Foreground="White" BorderBrush="White" FontSize="20" />
     </Grid>
 
 </Window>
