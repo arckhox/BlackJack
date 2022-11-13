@@ -75,11 +75,10 @@ namespace BlackJack
                 {
                     statusTextLabel.Content = "Push!";
                     restartGame();
+                    return;
                 }
                 gameWon();
             }
-            hitButton.IsEnabled = false;
-            standButton.IsEnabled = false;
         }
         private void gameLost()
         {
