@@ -39,6 +39,7 @@ namespace BlackJack
             dealButton.IsEnabled = false;
             hitButton.IsEnabled = true;
             standButton.IsEnabled = true;
+            statusTextLabel.Content = "Hit Or Stand? ;)";
         }
 
         private void hitButton_Click(object sender, RoutedEventArgs e)
@@ -70,6 +71,11 @@ namespace BlackJack
             }
             else
             {
+                if (blackJack.getDealerScore() == blackJack.getPlayerScore()) 
+                {
+                    statusTextLabel.Content = "Push!";
+                    restartGame();
+                }
                 gameWon();
             }
             hitButton.IsEnabled = false;
@@ -93,6 +99,7 @@ namespace BlackJack
             standButton.IsEnabled = false;
             dealerListView.Items.Clear();
             playerListView.Items.Clear();
+            statusTextLabel.Content += " Press Deal To Start Next Round";
         }
     }
 }
