@@ -40,7 +40,7 @@
             <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False" Click="hitButton_Click"/>
             <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False" Click="standButton_Click"/>
         </WrapPanel>
-        <Label x:Name="statusTextLabel" Grid.Row="2" Content="Round Started" HorizontalContentAlignment="center" VerticalContentAlignment="center" Background="#FF371515" Foreground="White" BorderBrush="White" FontSize="20" />
+        <Label x:Name="statusTextLabel" Grid.Row="2" Content="Round Started" HorizontalContentAlignment="center" VerticalContentAlignment="center" Background="#000" Foreground="White" BorderBrush="White" FontSize="20" />
     </Grid>
 
 </Window>

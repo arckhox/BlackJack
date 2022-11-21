@@ -39,6 +39,7 @@ namespace BlackJack
             dealButton.IsEnabled = false;
             hitButton.IsEnabled = true;
             standButton.IsEnabled = true;
+            statusTextLabel.Background = Brushes.Black;
             statusTextLabel.Content = "Hit Or Stand? ;)";
         }
 
@@ -83,11 +84,13 @@ namespace BlackJack
         private void gameLost()
         {
             statusTextLabel.Content = "Round Lost!";
+            statusTextLabel.Background = Brushes.DarkRed;
             restartGame();
         }
         private void gameWon()
         {
             statusTextLabel.Content = "Round Won!";
+            statusTextLabel.Background = Brushes.DarkGreen;
             restartGame();
         }
         private void restartGame()
