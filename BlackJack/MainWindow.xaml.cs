@@ -31,16 +31,21 @@ namespace BlackJack
 
         private void dealButton_Click(object sender, RoutedEventArgs e)
         {
+            blackJack.changeBalance(Convert.ToInt32(calculateBetValue()) * (-1));
+            playerBalanceLabel.Content = blackJack.getBalance();
             dealerListView.Items.Add(blackJack.pickCardForDealer());
             playerListView.Items.Add(blackJack.pickCardForPlayer());
             playerListView.Items.Add(blackJack.pickCardForPlayer());
             playerScoreLabel.Content = blackJack.getPlayerScore();
+            playerBalanceLabel.Content = blackJack.getBalance();
             dealerScoreLabel.Content = blackJack.getDealerScore();
             dealButton.IsEnabled = false;
             hitButton.IsEnabled = true;
             standButton.IsEnabled = true;
+            playerBetSlider.IsEnabled = false;
             statusTextLabel.Background = Brushes.Black;
             statusTextLabel.Content = "Hit Or Stand? ;)";
+
         }
 
         private void hitButton_Click(object sender, RoutedEventArgs e)
@@ -75,6 +80,7 @@ namespace BlackJack
                 if (blackJack.getDealerScore() == blackJack.getPlayerScore()) 
                 {
                     statusTextLabel.Content = "Push!";
+                    blackJack.changeBalance(Convert.ToInt32(playerBetLabel.Content));
                     restartGame();
                     return;
                 }
@@ -83,25 +89,64 @@ namespace BlackJack
         }
         private void gameLost()
         {
-            statusTextLabel.Content = "Round Lost!";
-            statusTextLabel.Background = Brushes.DarkRed;
             restartGame();
+            if (blackJack.getBalance() == 0)
+            {
+                playerBetSlider.IsEnabled = false;
+                statusTextLabel.Content = "Game Lost! Start a new game to continue";
+            }
+            else
+            {
+                statusTextLabel.Content = "Round Lost!";
+            }
+            statusTextLabel.Background = Brushes.DarkRed;
+            playerBetSlider.Value = 0;
         }
         private void gameWon()
         {
             statusTextLabel.Content = "Round Won!";
             statusTextLabel.Background = Brushes.DarkGreen;
+            blackJack.changeBalance((Convert.ToInt32(playerBetLabel.Content)) * 2);
             restartGame();
         }
         private void restartGame()
         {
             blackJack.initiateGame();
-            dealButton.IsEnabled = true;
+            dealButton.IsEnabled = false;
             hitButton.IsEnabled = false;
             standButton.IsEnabled = false;
+            playerBetSlider.IsEnabled = true;
             dealerListView.Items.Clear();
             playerListView.Items.Clear();
-            statusTextLabel.Content += " Press Deal To Start Next Round";
+            statusTextLabel.Content += " Start Betting To Start Next Round";
+            playerBalanceLabel.Content = blackJack.getBalance();
+            playerBetLabel.Content = "0";
+
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            playerBetLabel.Content = Math.Round(((playerBetSlider.Value * 0.1) * blackJack.getBalance()),MidpointRounding.ToPositiveInfinity);
+            if (playerBetSlider.Value >= 1)
+            {
+                dealButton.IsEnabled = true;
+            }
+            else
+            {
+                dealButton.IsEnabled = false;
+            }
+        }
+
+        private void newGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            restartGame();
+            blackJack.resetBalance();
+            statusTextLabel.Content = " New Game started Start betting";
+            statusTextLabel.Background = Brushes.Black; 
+        }
+        private double calculateBetValue()
+        {
+            return Math.Round(((playerBetSlider.Value * 0.1) * blackJack.getBalance()), MidpointRounding.ToPositiveInfinity);
         }
     }
 }

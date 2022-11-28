@@ -9,6 +9,8 @@ namespace BlackJack
     internal class Game
     {
         private Deck deck;
+        private const int START_BALANCE = 100;
+        private int balance;
         private int playerScore;
         private int dealerScore;
         private List<Card> playersCards;
@@ -21,6 +23,8 @@ namespace BlackJack
             dealerScore = 0;
             playersCards = new List<Card>();
             dealersCards = new List<Card>();
+            this.balance = START_BALANCE;
+            
         }
 
         public void initiateGame()
@@ -49,6 +53,26 @@ namespace BlackJack
         public int getDealerScore()
         {
             return dealerScore;
+        }
+        public int getBalance()
+        {
+            return this.balance;
+        }
+        public bool changeBalance(int value)
+        {
+            if (balance + value < 0)
+            {
+                return false;
+            }
+            else
+            {                    
+                this.balance += value;
+                return true;
+            }
+        }
+        public void resetBalance()
+        {
+            this.balance = START_BALANCE;
         }
         private void resetData()
         {
