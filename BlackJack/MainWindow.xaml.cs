@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace BlackJack
 {
@@ -21,9 +22,18 @@ namespace BlackJack
     public partial class MainWindow : Window
     {
         private Game blackJack;
+        private DispatcherTimer dispatcherTimer;
+        private List<Image> playerCardsImages;
+        private List<Image> dealerCardsImages;
+        private List<String> dealerCards;
+        private List<String> playerCards;
         public MainWindow()
         {
             InitializeComponent();
+            playerCardsImages = new List<Image>();
+            dealerCardsImages = new List<Image>();
+            dealerCards = new List<string>();
+            playerCards = new List<string>();
             int deckCount = 1;
             blackJack = new Game(deckCount);
             blackJack.initiateGame();
@@ -31,7 +41,13 @@ namespace BlackJack
 
         private void dealButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            playerScoreLabel.Visibility = Visibility.Hidden;
+            dealerScoreLabel.Visibility = Visibility.Hidden;
+            statusTextLabel.Visibility = Visibility.Hidden;
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Start();
             blackJack.changeBalance(Convert.ToInt32(calculateBetValue()) * (-1));
             playerBalanceLabel.Content = blackJack.getBalance();
             string playerbetValue = playerBetLabel.Content.ToString();
@@ -44,8 +60,6 @@ namespace BlackJack
             playerBalanceLabel.Content = blackJack.getBalance();
             dealerScoreLabel.Content = blackJack.getDealerScore();
             dealButton.IsEnabled = false;
-            hitButton.IsEnabled = true;
-            standButton.IsEnabled = true;
             playerBetLabel.Content = playerbetValue;
             playerBalanceLabel.Content = blackJack.getBalance();
             playerBetSlider.IsEnabled = false;
@@ -63,6 +77,9 @@ namespace BlackJack
 
         private void hitButton_Click(object sender, RoutedEventArgs e)
         {
+            playerScoreLabel.Visibility = Visibility.Hidden;
+            dealerScoreLabel.Visibility = Visibility.Hidden;
+            statusTextLabel.Visibility = Visibility.Hidden;
             pickCard(false);
             playerScoreLabel.Content = blackJack.getPlayerScore();
             if (blackJack.getPlayerScore() > 21)
@@ -81,6 +98,9 @@ namespace BlackJack
 
         private void standButton_Click(object sender, RoutedEventArgs e)
         {
+            playerScoreLabel.Visibility = Visibility.Hidden;
+            dealerScoreLabel.Visibility = Visibility.Hidden;
+            statusTextLabel.Visibility = Visibility.Hidden;
             while (blackJack.getDealerScore() < 16)
             {
                 pickCard(true);
@@ -99,6 +119,7 @@ namespace BlackJack
                 if (blackJack.getDealerScore() == blackJack.getPlayerScore()) 
                 {
                     statusTextLabel.Content = "Push!";
+                    statusTextLabel.Background = Brushes.DarkGray;
                     blackJack.changeBalance(Convert.ToInt32(playerBetLabel.Content));
                     hitButton.IsEnabled = false;
                     standButton.IsEnabled = false;
@@ -116,8 +137,13 @@ namespace BlackJack
             
             if (blackJack.getBalance() == 0)
             {
-                restartGame();
+                dealButton.IsEnabled = false;
+                hitButton.IsEnabled = false;
+                standButton.IsEnabled = false;
                 playerBetSlider.IsEnabled = false;
+                playerBalanceLabel.Content = blackJack.getBalance();
+                playerBetLabel.Content = "0";
+                playerBetSlider.Value = 0;
                 statusTextLabel.Content = "Game Lost! Start a new game to continue";
             }
             else
@@ -158,7 +184,6 @@ namespace BlackJack
             playerBetSlider.Value = 0;
             playerCardsView.Children.Clear();
             dealerCardsView.Children.Clear();
-
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -191,7 +216,7 @@ namespace BlackJack
         {
             if (isForDealer)
             {
-                dealerListView.Items.Add(blackJack.pickCardForDealer());
+                dealerCards.Add(blackJack.pickCardForDealer());
                 string tempCardNumber = blackJack.getLastDealerCardNumber();
                 string tempCardSuit = blackJack.getLastDealerCardSuit();
                 string tempPicName = tempCardNumber + tempCardSuit;
@@ -200,12 +225,13 @@ namespace BlackJack
                 tempImg.Source = new BitmapImage(source);
                 tempImg.MaxWidth = 50;
                 tempImg.Margin = new Thickness(5);
-                dealerCardsView.Children.Add(tempImg);
+                dealerCardsImages.Add(tempImg);
+                dispatcherTimer.Start();
                 return;
             }
             else
             {
-                playerListView.Items.Add(blackJack.pickCardForPlayer());
+                playerCards.Add(blackJack.pickCardForPlayer());
                 string tempCardNumber = blackJack.getLastPlayerCardNumber();
                 string tempCardSuit = blackJack.getLastPlayerCardSuit();
                 string tempPicName = tempCardNumber + tempCardSuit;
@@ -214,9 +240,44 @@ namespace BlackJack
                 tempImg.Source = new BitmapImage(source);
                 tempImg.MaxWidth = 50;
                 tempImg.Margin = new Thickness(5);
-                playerCardsView.Children.Add(tempImg);
+                playerCardsImages.Add(tempImg);
+                dispatcherTimer.Start();
                 return;
             }
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            // Updating the Label which displays the current second
+            if (playerCardsImages.Count() != 0)
+            {
+                playerListView.Items.Add(playerCards.First());
+                playerCards.Remove(playerCards.First());
+                playerCardsView.Children.Add(playerCardsImages.First());
+                playerCardsImages.Remove(playerCardsImages.First());
+                return;
+            }else if (dealerCardsImages.Count() != 0)
+            {
+                dealerListView.Items.Add(dealerCards.First());
+                dealerCards.Remove(dealerCards.First());
+                dealerCardsView.Children.Add(dealerCardsImages.First());
+                dealerCardsImages.Remove(dealerCardsImages.First());
+                return;
+            }
+            else
+            {
+                dispatcherTimer.Stop();
+                if (statusTextLabel.Background == Brushes.Black)
+                {
+                    hitButton.IsEnabled = true;
+                    standButton.IsEnabled = true;
+                }
+                playerScoreLabel.Visibility = Visibility.Visible;
+                dealerScoreLabel.Visibility = Visibility.Visible;
+                statusTextLabel.Visibility = Visibility.Visible;
+            }
+
+            // Forcing the CommandManager to raise the RequerySuggested event
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
