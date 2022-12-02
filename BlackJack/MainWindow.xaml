@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackJack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="900">
+        Title="MainWindow" MinHeight="550" MinWidth="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="2*"/>
-			<RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
@@ -24,15 +24,23 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <WrapPanel Orientation="Vertical" Grid.Column="0" Margin="0 10">
-                <Label Content="Player" HorizontalAlignment="Center" Background="White"/>
-                <ListView x:Name="playerListView"  MinWidth="300" MinHeight="200" Margin="30 10"/>
-                <Label x:Name="playerScoreLabel" Content="Null" HorizontalAlignment="Center" Background="White"/>
+            <WrapPanel Orientation="Horizontal" Grid.Column="0">
+                <WrapPanel Orientation="Vertical"  Margin="0 10">
+                    <Label Content="Player" HorizontalAlignment="Center" Background="White"/>
+                    <ListView x:Name="playerListView"  MinWidth="300" MinHeight="200" Margin="30 10"/>
+                    <Label x:Name="playerScoreLabel" Content="Null" HorizontalAlignment="Center" Background="White"/>
+                </WrapPanel>
+                <WrapPanel x:Name="playerCardsView" Orientation="Vertical" Margin="30">
+                </WrapPanel>
             </WrapPanel>
-            <WrapPanel Orientation="Vertical" Grid.Column="1" Margin="0 10">
-                <Label Content="Dealer" HorizontalAlignment="Center" Background="White"/>
-                <ListView x:Name="dealerListView"  MinWidth="300" MinHeight="200" Margin="30 10"/>
-                <Label x:Name="dealerScoreLabel" Content="Null" HorizontalAlignment="Center" Background="White"/>
+            <WrapPanel Orientation="Horizontal" Grid.Column="1">
+                <WrapPanel Orientation="Vertical"  Margin="0 10">
+                    <Label Content="Dealer" HorizontalAlignment="Center" Background="White"/>
+                    <ListView x:Name="dealerListView"  MinWidth="300" MinHeight="200" Margin="30 10"/>
+                    <Label x:Name="dealerScoreLabel" Content="Null" HorizontalAlignment="Center" Background="White"/>
+                </WrapPanel>
+                <WrapPanel x:Name="dealerCardsView" Orientation="Vertical" Margin="30">
+                </WrapPanel>
             </WrapPanel>
         </Grid>
 

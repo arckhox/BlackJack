@@ -7,4 +7,222 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="resources\Cards\10C.svg.png" />
+    <None Remove="resources\Cards\10D.svg.png" />
+    <None Remove="resources\Cards\10H.svg.png" />
+    <None Remove="resources\Cards\10S.svg.png" />
+    <None Remove="resources\Cards\2C.svg.png" />
+    <None Remove="resources\Cards\2D.svg.png" />
+    <None Remove="resources\Cards\2H.svg.png" />
+    <None Remove="resources\Cards\2S.svg.png" />
+    <None Remove="resources\Cards\3C.svg.png" />
+    <None Remove="resources\Cards\3D.svg.png" />
+    <None Remove="resources\Cards\3H.svg.png" />
+    <None Remove="resources\Cards\3S.svg.png" />
+    <None Remove="resources\Cards\4C.svg.png" />
+    <None Remove="resources\Cards\4D.svg.png" />
+    <None Remove="resources\Cards\4H.svg.png" />
+    <None Remove="resources\Cards\4S.svg.png" />
+    <None Remove="resources\Cards\5C.svg.png" />
+    <None Remove="resources\Cards\5D.svg.png" />
+    <None Remove="resources\Cards\5H.svg.png" />
+    <None Remove="resources\Cards\5S.svg.png" />
+    <None Remove="resources\Cards\6C.svg.png" />
+    <None Remove="resources\Cards\6D.svg.png" />
+    <None Remove="resources\Cards\6H.svg.png" />
+    <None Remove="resources\Cards\6S.svg.png" />
+    <None Remove="resources\Cards\7C.svg.png" />
+    <None Remove="resources\Cards\7D.svg.png" />
+    <None Remove="resources\Cards\7H.svg.png" />
+    <None Remove="resources\Cards\7S.svg.png" />
+    <None Remove="resources\Cards\8C.svg.png" />
+    <None Remove="resources\Cards\8D.svg.png" />
+    <None Remove="resources\Cards\8H.svg.png" />
+    <None Remove="resources\Cards\8S.svg.png" />
+    <None Remove="resources\Cards\9C.svg.png" />
+    <None Remove="resources\Cards\9D.svg.png" />
+    <None Remove="resources\Cards\9H.svg.png" />
+    <None Remove="resources\Cards\9S.svg.png" />
+    <None Remove="resources\Cards\AC.svg.png" />
+    <None Remove="resources\Cards\AD.svg.png" />
+    <None Remove="resources\Cards\AH.svg.png" />
+    <None Remove="resources\Cards\AS.svg.png" />
+    <None Remove="resources\Cards\back.png" />
+    <None Remove="resources\Cards\JC.svg.png" />
+    <None Remove="resources\Cards\JD.svg.png" />
+    <None Remove="resources\Cards\JH.svg.png" />
+    <None Remove="resources\Cards\JS.svg.png" />
+    <None Remove="resources\Cards\KC.svg.png" />
+    <None Remove="resources\Cards\KD.svg.png" />
+    <None Remove="resources\Cards\KH.svg.png" />
+    <None Remove="resources\Cards\KS.svg.png" />
+    <None Remove="resources\Cards\QC.svg.png" />
+    <None Remove="resources\Cards\QD.svg.png" />
+    <None Remove="resources\Cards\QH.svg.png" />
+    <None Remove="resources\Cards\QS.svg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\Cards\10C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\10D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\10H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\10S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\2C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\2D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\2H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\2S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\3C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\3D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\3H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\3S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\4C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\4D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\4H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\4S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\5C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\5D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\5H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\5S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\6C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\6D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\6H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\6S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\7C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\7D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\7H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\7S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\8C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\8D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\8H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\8S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\9C.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\9D.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\9H.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\9S.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\AC.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\AD.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\AH.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\AS.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\JC.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\JD.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\JH.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\JS.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\KC.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\KD.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\KH.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\KS.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\QC.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\QD.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\QH.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\Cards\QS.svg.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

@@ -35,7 +35,17 @@ namespace BlackJack
         public string pickCardForPlayer()
         {
             Card tempCard = deck.pickCard();
-            playerScore += tempCard.getValue();
+            if (tempCard.getNumber() == "A") // Aces can be 11 or 1
+            {
+                if (playerScore + 11 <= 21)
+                {
+                    playerScore += 11;
+                }
+            }
+            else
+            {
+                playerScore += tempCard.getValue();
+            }
             playersCards.Add(tempCard);
             return (tempCard.getSuit() + " " + tempCard.getNumber());
         }
@@ -57,6 +67,46 @@ namespace BlackJack
         public int getBalance()
         {
             return this.balance;
+        }
+        public string getLastDealerCardNumber()
+        {
+            return this.dealersCards.Last().getNumber();
+        }
+        public string getLastDealerCardSuit()
+        {
+            switch (this.dealersCards.Last().getSuit())
+            {
+                case "Hearts":
+                    return "H";
+                case "Clubs":
+                    return "C";
+                case "Spades":
+                    return "S";
+                case "Diamonds":
+                    return "D";
+                default:
+                    return "?";
+            }
+        }
+        public string getLastPlayerCardNumber()
+        {
+            return this.playersCards.Last().getNumber();
+        }
+        public string getLastPlayerCardSuit()
+        {
+            switch (this.playersCards.Last().getSuit())
+            {
+                case "Hearts":
+                    return "H";
+                case "Clubs":
+                    return "C";
+                case "Spades":
+                    return "S";
+                case "Diamonds":
+                    return "D";
+                default:
+                    return "?";
+            }
         }
         public bool changeBalance(int value)
         {
