@@ -41,6 +41,9 @@ namespace BlackJack
                 {
                     playerScore += 11;
                 }
+                else{
+                    playerScore += 1;
+                }
             }
             else
             {

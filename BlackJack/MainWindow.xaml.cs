@@ -41,6 +41,7 @@ namespace BlackJack
 
         private void dealButton_Click(object sender, RoutedEventArgs e)
         {
+            int playerBet = Convert.ToInt32(playerBetLabel.Content);
             playerScoreLabel.Visibility = Visibility.Hidden;
             dealerScoreLabel.Visibility = Visibility.Hidden;
             statusTextLabel.Visibility = Visibility.Hidden;
@@ -50,7 +51,7 @@ namespace BlackJack
             dispatcherTimer.Start();
             blackJack.changeBalance(Convert.ToInt32(calculateBetValue()) * (-1));
             playerBalanceLabel.Content = blackJack.getBalance();
-            string playerbetValue = playerBetLabel.Content.ToString();
+            string playerbetValue = playerBet.ToString();
             restartGame();
             pickCard(true); // pass true if the card picked is for the dealer
             //dealerCardsView.Children.add
@@ -71,6 +72,13 @@ namespace BlackJack
                 standButton.IsEnabled = false;
                 standButton_Click(null, null);
             }
+            // check if the player has enough balance to double down the bet(already subtracted from his balance once)
+            else if (checkPlayerBalance(playerBet))
+            {
+                doubleDownButton.IsEnabled = true;
+            }
+            
+
 
 
         }
@@ -131,6 +139,27 @@ namespace BlackJack
                 }
                 gameWon();
             }
+        }
+        private void doubleDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            int playerBet = Convert.ToInt32(playerBetLabel.Content.ToString());
+            blackJack.changeBalance(playerBet * -1);
+            playerBalanceLabel.Content = blackJack.getBalance();
+            playerBetLabel.Content = playerBet * 2;
+            doubleDownButton.IsEnabled = false;
+            hitButton_Click(null, null);
+            standButton_Click(null,null);
+        }
+        private bool checkPlayerBalance(int playerBet)
+        {
+            int playerBalance = blackJack.getBalance();
+            // the player must afford the bet value already paid again.
+            if (playerBalance >= playerBet) 
+            {
+                return true;
+            }
+            return false;
         }
         private void gameLost()
         {
@@ -279,5 +308,7 @@ namespace BlackJack
             // Forcing the CommandManager to raise the RequerySuggested event
             CommandManager.InvalidateRequerySuggested();
         }
+
+
     }
 }

@@ -48,6 +48,7 @@
             <Button x:Name="dealButton" Margin="30" Content="Deal" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="dealButton_Click" IsEnabled="False"/>
             <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False" Click="hitButton_Click"/>
             <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False" Click="standButton_Click"/>
+            <Button x:Name="doubleDownButton" Margin="30" Content="DoubleDown" MinWidth="200" MinHeight="40" Background="#FFDF00FD" IsEnabled="False" Click="doubleDownButton_Click"/>
         </WrapPanel>
         <WrapPanel Orientation="Horizontal" Grid.Row="2" Background="#FF191919">
             <WrapPanel Orientation="Vertical">
