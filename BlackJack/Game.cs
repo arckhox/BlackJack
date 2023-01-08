@@ -37,7 +37,7 @@ namespace BlackJack
             Card tempCard = deck.pickCard();
             if (tempCard.getNumber() == "A") // Aces can be 11 or 1
             {
-                if (playerScore + 11 <= 21)
+                if (playerScore + 11 < 22)
                 {
                     playerScore += 11;
                 }
@@ -55,7 +55,21 @@ namespace BlackJack
         public string pickCardForDealer()
         {
             Card tempCard = deck.pickCard();
-            dealerScore += tempCard.getValue();
+            if (tempCard.getNumber() == "A") // Aces can be 11 or 1
+            {
+                if (dealerScore + 11 < 22)
+                {
+                    dealerScore += 11;
+                }
+                else
+                {
+                    dealerScore += 1;
+                }
+            }
+            else
+            {
+                dealerScore += tempCard.getValue();
+            }
             dealersCards.Add(tempCard);
             return (tempCard.getSuit() + " " + tempCard.getNumber());
         }

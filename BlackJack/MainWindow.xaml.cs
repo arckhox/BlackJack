@@ -23,10 +23,12 @@ namespace BlackJack
     {
         private Game blackJack;
         private DispatcherTimer dispatcherTimer;
+        private DispatcherTimer time;
         private List<Image> playerCardsImages;
         private List<Image> dealerCardsImages;
         private List<String> dealerCards;
         private List<String> playerCards;
+        private int roundNumber = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -37,20 +39,27 @@ namespace BlackJack
             int deckCount = 1;
             blackJack = new Game(deckCount);
             blackJack.initiateGame();
-        }
-
-        private void dealButton_Click(object sender, RoutedEventArgs e)
-        {
-            int playerBet = Convert.ToInt32(playerBetLabel.Content);
-            playerScoreLabel.Visibility = Visibility.Hidden;
-            dealerScoreLabel.Visibility = Visibility.Hidden;
-            statusTextLabel.Visibility = Visibility.Hidden;
+            // to show the time
+            time = new System.Windows.Threading.DispatcherTimer();
+            time.Tick += new EventHandler(timeTick);
+            time.Interval = new TimeSpan(0, 0, 1);
+            time.Start();
+            // to deal the cards
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
-            blackJack.changeBalance(Convert.ToInt32(calculateBetValue()) * (-1));
-            playerBalanceLabel.Content = blackJack.getBalance();
+        }
+
+        private void dealButton_Click(object sender, RoutedEventArgs e)
+        {
+            roundNumber++;
+            int playerBet = Convert.ToInt32(playerBetLabel.Content);
+            playerScoreLabel.Visibility = Visibility.Hidden;
+            dealerScoreLabel.Visibility = Visibility.Hidden;
+            statusTextLabel.Visibility = Visibility.Hidden;
+            blackJack.changeBalance(playerBet * (-1));
+            updateBalance();
             string playerbetValue = playerBet.ToString();
             restartGame();
             pickCard(true); // pass true if the card picked is for the dealer
@@ -58,11 +67,11 @@ namespace BlackJack
             pickCard(false);
             pickCard(false);
             playerScoreLabel.Content = blackJack.getPlayerScore();
-            playerBalanceLabel.Content = blackJack.getBalance();
+            updateBalance();
             dealerScoreLabel.Content = blackJack.getDealerScore();
             dealButton.IsEnabled = false;
             playerBetLabel.Content = playerbetValue;
-            playerBalanceLabel.Content = blackJack.getBalance();
+            updateBalance();
             playerBetSlider.IsEnabled = false;
             statusTextLabel.Background = Brushes.Black;
             statusTextLabel.Content = "Hit Or Stand? ;)";
@@ -73,14 +82,6 @@ namespace BlackJack
                 standButton_Click(null, null);
             }
             // check if the player has enough balance to double down the bet(already subtracted from his balance once)
-            else if (checkPlayerBalance(playerBet))
-            {
-                doubleDownButton.IsEnabled = true;
-            }
-            
-
-
-
         }
 
         private void hitButton_Click(object sender, RoutedEventArgs e)
@@ -105,7 +106,11 @@ namespace BlackJack
         }
 
         private void standButton_Click(object sender, RoutedEventArgs e)
-        {
+         {
+            if (blackJack.getPlayerScore() > 21)
+            {
+                return;
+            }
             playerScoreLabel.Visibility = Visibility.Hidden;
             dealerScoreLabel.Visibility = Visibility.Hidden;
             statusTextLabel.Visibility = Visibility.Hidden;
@@ -114,7 +119,7 @@ namespace BlackJack
                 pickCard(true);
             }
             dealerScoreLabel.Content = blackJack.getDealerScore();
-            if (blackJack.getDealerScore() > 21)
+            if (blackJack.getDealerScore() > 21 && (blackJack.getPlayerScore() <= blackJack.getDealerScore()))
             {
                 gameWon();
             }
@@ -126,13 +131,15 @@ namespace BlackJack
             {
                 if (blackJack.getDealerScore() == blackJack.getPlayerScore()) 
                 {
+                    string playerBet = playerBetLabel.Content.ToString();
+                    historyTextLabel.Content = "Last Round Info: Push " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
                     statusTextLabel.Content = "Push!";
                     statusTextLabel.Background = Brushes.DarkGray;
                     blackJack.changeBalance(Convert.ToInt32(playerBetLabel.Content));
                     hitButton.IsEnabled = false;
                     standButton.IsEnabled = false;
                     playerBetSlider.IsEnabled = true;
-                    playerBalanceLabel.Content = blackJack.getBalance();
+                    updateBalance();
                     playerBetLabel.Content = "0";
                     playerBetSlider.Value = 0;
                     return;
@@ -142,14 +149,14 @@ namespace BlackJack
         }
         private void doubleDownButton_Click(object sender, RoutedEventArgs e)
         {
-            
             int playerBet = Convert.ToInt32(playerBetLabel.Content.ToString());
             blackJack.changeBalance(playerBet * -1);
-            playerBalanceLabel.Content = blackJack.getBalance();
             playerBetLabel.Content = playerBet * 2;
             doubleDownButton.IsEnabled = false;
+
             hitButton_Click(null, null);
             standButton_Click(null,null);
+
         }
         private bool checkPlayerBalance(int playerBet)
         {
@@ -170,14 +177,15 @@ namespace BlackJack
                 hitButton.IsEnabled = false;
                 standButton.IsEnabled = false;
                 playerBetSlider.IsEnabled = false;
-                playerBalanceLabel.Content = blackJack.getBalance();
+                statusTextLabel.Content = "You lost all your money! Start a new game to continue";
                 playerBetLabel.Content = "0";
                 playerBetSlider.Value = 0;
-                statusTextLabel.Content = "Game Lost! Start a new game to continue";
             }
             else
             {
-                statusTextLabel.Content = "Round Lost!";
+                string playerBet = playerBetLabel.Content.ToString();
+                statusTextLabel.Content = "You lost " + playerBet;
+                historyTextLabel.Content = "Last Round Info: You lost " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
                 hitButton.IsEnabled = false;
                 standButton.IsEnabled = false;
                 playerBetSlider.IsEnabled = true;
@@ -185,13 +193,16 @@ namespace BlackJack
                 playerBetSlider.Value = 0;
             }
             statusTextLabel.Background = Brushes.DarkRed;
+            updateBalance();
         }
         private void gameWon()
         {
-            statusTextLabel.Content = "Round Won!";
+            string playerBet = playerBetLabel.Content.ToString();
+            statusTextLabel.Content = "You Won " + playerBet;
+            historyTextLabel.Content = "Last Round Info: You Won " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
             statusTextLabel.Background = Brushes.DarkGreen;
             blackJack.changeBalance((Convert.ToInt32(playerBetLabel.Content)) * 2); // als de player wint dan krijgt hij 2x zijn bet terug
-            playerBalanceLabel.Content = blackJack.getBalance();
+            updateBalance();
             playerBetLabel.Content = "0";
             playerBetSlider.Value = 0;
             hitButton.IsEnabled = false;
@@ -208,11 +219,12 @@ namespace BlackJack
             dealerListView.Items.Clear();
             playerListView.Items.Clear();
             statusTextLabel.Content += " Start Betting To Start Next Round";
-            playerBalanceLabel.Content = blackJack.getBalance();
+            updateBalance(); 
             playerBetLabel.Content = "0";
             playerBetSlider.Value = 0;
             playerCardsView.Children.Clear();
             dealerCardsView.Children.Clear();
+            doubleDownButton.IsEnabled = false;
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -230,6 +242,11 @@ namespace BlackJack
 
         private void newGameButton_Click(object sender, RoutedEventArgs e)
         {
+            if (dispatcherTimer.IsEnabled)
+            {
+                dispatcherTimer.Stop();
+            }
+            
             blackJack.resetBalance();
             restartGame();
             statusTextLabel.Content = " New Game started Start betting";
@@ -239,7 +256,7 @@ namespace BlackJack
         }
         private double calculateBetValue()
         {
-            return Math.Round(((playerBetSlider.Value * 0.1) * blackJack.getBalance()), MidpointRounding.ToPositiveInfinity); // bet value must be 10% of the players total balance
+            return Math.Round(((playerBetSlider.Value * 0.1) * blackJack.getBalance()), MidpointRounding.ToNegativeInfinity); // bet value must be 10% of the players total balance
         }
         private void pickCard(bool isForDealer)
         {
@@ -274,8 +291,13 @@ namespace BlackJack
                 return;
             }
         }
+        private void timeTick(object sender, EventArgs e)
+        {
+            timeTextLabel.Content = DateTime.Now.ToString("hh:mm:ss");
+        }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
+            
             // Updating the Label which displays the current second
             if (playerCardsImages.Count() != 0)
             {
@@ -299,16 +321,24 @@ namespace BlackJack
                 {
                     hitButton.IsEnabled = true;
                     standButton.IsEnabled = true;
+                    int playerBet = Convert.ToInt32(playerBetLabel.Content);
+                    if (checkPlayerBalance(playerBet))
+                    {
+                        doubleDownButton.IsEnabled = true;
+                    }
                 }
                 playerScoreLabel.Visibility = Visibility.Visible;
                 dealerScoreLabel.Visibility = Visibility.Visible;
                 statusTextLabel.Visibility = Visibility.Visible;
             }
-
             // Forcing the CommandManager to raise the RequerySuggested event
             CommandManager.InvalidateRequerySuggested();
         }
 
+        private void updateBalance()
+        {
+            playerBalanceLabel.Content = blackJack.getBalance();
+        }
 
     }
 }
