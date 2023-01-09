@@ -10,7 +10,7 @@ Discription: XAML for the Main Window
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlackJack"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="550" MinWidth="1100" d:DesignHeight="610" d:DesignWidth="1175.714">
+        Title="MainWindow" MinHeight="700" MinWidth="1200" d:DesignHeight="610" d:DesignWidth="1175.714">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
