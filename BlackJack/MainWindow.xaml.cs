@@ -286,7 +286,6 @@ namespace BlackJack
             playerBetSlider.IsEnabled = true;
             dealerListView.Items.Clear();
             playerListView.Items.Clear();
-            historyList.Clear();
             statusTextLabel.Content += " Start Betting To Start Next Round";
             UpdateBalance(); 
             playerBetLabel.Content = "0";
