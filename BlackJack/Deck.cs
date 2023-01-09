@@ -121,5 +121,13 @@ namespace BlackJack
         {
             return deckCount;
         }
+        /// <summary>
+        /// Returns the number of remaining cards in the deck
+        /// </summary>
+        /// <returns> The count of remaining cards in the deck</returns>
+        public int getCardsCount()
+        {
+            return cards.Count();
+        }
     }
 }
