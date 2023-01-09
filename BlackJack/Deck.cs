@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Datum: Check Github, for commits and pushes
+//Auteur: Arsalan Khosrojerdi
+//Discription: Deck Class
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +11,25 @@ using System.Windows.Documents;
 
 namespace BlackJack
 {
+    ///<summary>
+    /// The Deck Class represents the deck used for the current game, it can contain more than 1 deck in it(shown by the deckCount attribute)
+    /// it also contains a list of the cards in the deck
+    ///</summary>
     internal class Deck
     {
+        ///<summary>
+        /// Count of the decks used 
+        ///</summary>
         private int deckCount;
+        ///<summary>
+        /// A list that contains all the cards
+        ///</summary>
         private List<Card> cards;
+        /// <summary>
+        /// Default Constructor for the Deck Class.
+        /// Creates the deck and shuffles the cards.
+        /// </summary>
+        /// <param name="deckCount">An integer that represents the number of the decks</param>
         public Deck(int deckCount) // Main Constructor
         {
             cards = new List<Card>();
@@ -18,6 +37,10 @@ namespace BlackJack
             createDeck(deckCount); // Creates the cards and adds them to the "cards" list
             shuffleCards(500); // swap cards randomly for 500 times in the deck
         }
+        /// <summary>
+        /// Creates the deck
+        /// </summary>
+        /// <param name="deckCount">An integer that represents the number of the decks</param>
         private void createDeck(int deckCount)
         {
             while (cards.Count < (deckCount * 52))
@@ -28,6 +51,10 @@ namespace BlackJack
                 createCardsPerSuit("Hearts", false);
             }
         }
+        /// <summary>
+        /// It calculates the special cards number. for example J is 11,Q is 12 and...
+        /// </summary>
+        /// <param name="number">An integer that represents the index of the card being created</param>
         private string calculateCardNumber(int number)
         {
             switch (number)
@@ -39,6 +66,11 @@ namespace BlackJack
                 default: return number.ToString();
             }
         }
+        /// <summary>
+        /// It creates cards differentiated by each suit(13 of each suit)
+        /// </summary>
+        /// <param name="suit">Suit of the card</param>
+        /// <param name="isSuitColorBlack"><c>true</c> if the color of the suit is black, otherwise <c>false</c></param>
         private void createCardsPerSuit(string suit, bool isSuitColorBlack)
         {
             for (int i = 1; i < 14; i++) // Clubs
@@ -48,12 +80,21 @@ namespace BlackJack
                 cards.Add(tempCard);
             }
         }
-        private void swapCards(int firstCardIndex ,int secondCardIndex) // Swaps the location of 2 cards in the deck
+        /// <summary>
+        /// Swaps the location of 2 cards in the deck (Used mostly for shuffling the deck)
+        /// </summary>
+        /// <param name="firstCardIndex">An integer that represents the index of the <c>first</c> card being swapped</param>
+        /// <param name="secondCardIndex">An integer that represents the index of the <c>Second</c> card being swapped</param>
+        private void swapCards(int firstCardIndex ,int secondCardIndex)
         {
             Card tempCard = cards[firstCardIndex];
             cards[firstCardIndex] = cards[secondCardIndex];
             cards[secondCardIndex] = tempCard;
         }
+        /// <summary>
+        /// Shuffles the cards. swaps the location of random cards in the deck for "<c>shuffleCount</c>" times
+        /// </summary>
+        /// <param name="shuffleCount">The times you need to swap the locations of 2 random cards</param>
         public void shuffleCards(int shuffleCount) // shuffles cards randomly
         {
             Random random = new Random();
@@ -62,12 +103,20 @@ namespace BlackJack
                 swapCards(random.Next(0, 51), random.Next(0, 52));
             }
         }
-        public Card pickCard() // picks(returns) the first card on the deck and removes it from the list
+        /// <summary>
+        /// picks(returns) the first card on the deck and removes it from the list
+        /// </summary>
+        /// <returns>the first card on the deck</returns>
+        public Card pickCard()
         {
             Card cardToReturn = cards[0];
             cards.RemoveAt(0);
             return cardToReturn;
         }
+        /// <summary>
+        /// getter for the <c>deckCount</c> attribute of the Deck Class
+        /// </summary>
+        /// <returns>deckCount</returns>
         public int getDeckCount()
         {
             return deckCount;
