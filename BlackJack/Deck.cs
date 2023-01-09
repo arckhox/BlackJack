@@ -34,28 +34,28 @@ namespace BlackJack
         {
             cards = new List<Card>();
             this.deckCount = deckCount;
-            createDeck(deckCount); // Creates the cards and adds them to the "cards" list
-            shuffleCards(500); // swap cards randomly for 500 times in the deck
+            CreateDeck(deckCount); // Creates the cards and adds them to the "cards" list
+            ShuffleCards(500); // swap cards randomly for 500 times in the deck
         }
         /// <summary>
         /// Creates the deck
         /// </summary>
         /// <param name="deckCount">An integer that represents the number of the decks</param>
-        private void createDeck(int deckCount)
+        private void CreateDeck(int deckCount)
         {
             while (cards.Count < (deckCount * 52))
             {
-                createCardsPerSuit("Clubs", true);
-                createCardsPerSuit("Spades", true);
-                createCardsPerSuit("Diamonds", false);
-                createCardsPerSuit("Hearts", false);
+                CreateCardsPerSuit("Clubs", true);
+                CreateCardsPerSuit("Spades", true);
+                CreateCardsPerSuit("Diamonds", false);
+                CreateCardsPerSuit("Hearts", false);
             }
         }
         /// <summary>
         /// It calculates the special cards number. for example J is 11,Q is 12 and...
         /// </summary>
         /// <param name="number">An integer that represents the index of the card being created</param>
-        private string calculateCardNumber(int number)
+        private string CalculateCardNumber(int number)
         {
             switch (number)
             {
@@ -71,11 +71,11 @@ namespace BlackJack
         /// </summary>
         /// <param name="suit">Suit of the card</param>
         /// <param name="isSuitColorBlack"><c>true</c> if the color of the suit is black, otherwise <c>false</c></param>
-        private void createCardsPerSuit(string suit, bool isSuitColorBlack)
+        private void CreateCardsPerSuit(string suit, bool isSuitColorBlack)
         {
             for (int i = 1; i < 14; i++) // Clubs
             {
-                string cardNumber = calculateCardNumber(i); // This function Calculates the Character of the card(J,Q,K,A,2,3,4 and ...)
+                string cardNumber = CalculateCardNumber(i); // This function Calculates the Character of the card(J,Q,K,A,2,3,4 and ...)
                 Card tempCard = new Card(cardNumber, suit, isSuitColorBlack, i >= 11 ? 10 : i); //First Argument is the card number/character(K,A,5,4 and ...),2nd arg is the suit(Clubs,Hearts or..) ,3rd is the color(true if black), 4th is the value of the card
                 cards.Add(tempCard);
             }
@@ -85,7 +85,7 @@ namespace BlackJack
         /// </summary>
         /// <param name="firstCardIndex">An integer that represents the index of the <c>first</c> card being swapped</param>
         /// <param name="secondCardIndex">An integer that represents the index of the <c>Second</c> card being swapped</param>
-        private void swapCards(int firstCardIndex ,int secondCardIndex)
+        private void SwapCards(int firstCardIndex ,int secondCardIndex)
         {
             Card tempCard = cards[firstCardIndex];
             cards[firstCardIndex] = cards[secondCardIndex];
@@ -95,19 +95,19 @@ namespace BlackJack
         /// Shuffles the cards. swaps the location of random cards in the deck for "<c>shuffleCount</c>" times
         /// </summary>
         /// <param name="shuffleCount">The times you need to swap the locations of 2 random cards</param>
-        public void shuffleCards(int shuffleCount) // shuffles cards randomly
+        public void ShuffleCards(int shuffleCount) // shuffles cards randomly
         {
             Random random = new Random();
             for (int i = 0; i < shuffleCount; i++) // Swaps the location of 2 cards on the list for "shuffleCount" times
             {
-                swapCards(random.Next(0, 51), random.Next(0, 52));
+                SwapCards(random.Next(0, 51), random.Next(0, 52));
             }
         }
         /// <summary>
         /// picks(returns) the first card on the deck and removes it from the list
         /// </summary>
         /// <returns>the first card on the deck</returns>
-        public Card pickCard()
+        public Card PickCard()
         {
             Card cardToReturn = cards[0];
             cards.RemoveAt(0);
@@ -117,7 +117,7 @@ namespace BlackJack
         /// getter for the <c>deckCount</c> attribute of the Deck Class
         /// </summary>
         /// <returns>deckCount</returns>
-        public int getDeckCount()
+        public int GetDeckCount()
         {
             return deckCount;
         }
@@ -125,7 +125,7 @@ namespace BlackJack
         /// Returns the number of remaining cards in the deck
         /// </summary>
         /// <returns> The count of remaining cards in the deck</returns>
-        public int getCardsCount()
+        public int GetCardsCount()
         {
             return cards.Count();
         }

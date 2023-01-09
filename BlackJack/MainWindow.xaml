@@ -52,10 +52,10 @@ Discription: XAML for the Main Window
         </Grid>
 
         <WrapPanel Orientation="Horizontal" Grid.Row="1" Background="#FF191919">
-            <Button x:Name="dealButton" Margin="30" Content="Deal" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="dealButton_Click" IsEnabled="False"/>
-            <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False" Click="hitButton_Click"/>
-            <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False" Click="standButton_Click"/>
-            <Button x:Name="doubleDownButton" Margin="30" Content="DoubleDown" MinWidth="200" MinHeight="40" Background="#FFDF00FD" IsEnabled="False" Click="doubleDownButton_Click"/>
+            <Button x:Name="dealButton" Margin="30" Content="Deal" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="DealButton_Click" IsEnabled="False"/>
+            <Button x:Name="hitButton" Margin="30" Content="Hit" MinWidth="200" MinHeight="40" Background="#FF35EA82" IsEnabled="False" Click="HitButton_Click"/>
+            <Button x:Name="standButton" Margin="30" Content="Stand" MinWidth="200" MinHeight="40" Background="#FF861C04" IsEnabled="False" Click="StandButton_Click"/>
+            <Button x:Name="doubleDownButton" Margin="30" Content="DoubleDown" MinWidth="200" MinHeight="40" Background="#FFDF00FD" IsEnabled="False" Click="DoubleDownButton_Click"/>
         </WrapPanel>
         <WrapPanel Orientation="Horizontal" Grid.Row="2" Background="#FF191919">
             <WrapPanel Orientation="Vertical">
@@ -68,10 +68,10 @@ Discription: XAML for the Main Window
             </WrapPanel>
 
             <Slider x:Name="playerBetSlider" MinWidth="200" VerticalAlignment="Center" Margin="30" ValueChanged="Slider_ValueChanged"/>
-            <Button x:Name="newGameButton" Margin="30" Content="New Game" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="newGameButton_Click"/>
+            <Button x:Name="newGameButton" Margin="30" Content="New Game" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="NewGameButton_Click"/>
         </WrapPanel>
         <Label x:Name="statusTextLabel" Grid.Row="3"  Content="Round Started" HorizontalAlignment="Center" VerticalAlignment="Center"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" />
-        <Button x:Name="historyTextLabel" Grid.Row="4" Content="Last Round Info: null"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" Click="historyTextLabel_Click"  />
+        <Button x:Name="historyTextLabel" Grid.Row="4" Content="Last Round Info: null"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" Click="HistoryTextLabel_Click"  />
         <Label x:Name="timeTextLabel" Grid.Row="5" Content="00:00:00"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 

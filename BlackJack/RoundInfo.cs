@@ -55,7 +55,7 @@ namespace BlackJack
         /// Makes a formatted string to show the user later in the UI. contains information about the previos round.
         /// </summary>
         /// <returns>The formatted string</returns>
-        public string getString()
+        public string GetString()
         {
             string stringToReturn = "Round " + this.roundNumber;
             if (playerWon)

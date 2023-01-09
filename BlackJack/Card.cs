@@ -61,7 +61,7 @@ namespace BlackJack
         /// getter for number attribute of the Card class
         /// </summary>
         /// <returns>Number(string) attribute of the Card class.</returns>
-        public string getNumber()
+        public string GetNumber()
         {
             return number;
         }
@@ -69,7 +69,7 @@ namespace BlackJack
         /// getter for suit attribute of the Card class
         /// </summary>
         /// <returns>suit(string) attribute of the Card class.</returns>
-        public string getSuit()
+        public string GetSuit()
         {
             return suit;
         }
@@ -77,7 +77,7 @@ namespace BlackJack
         /// getter for color of the Card 
         /// </summary>
         /// <returns>"Black" or "Red".</returns>
-        public string getColor()
+        public string GetColor()
         {
             return isColorBlack? "Black" : "Red"; 
         }
@@ -85,7 +85,7 @@ namespace BlackJack
         /// getter for value attribute of the Card class
         /// </summary>
         /// <returns>value(int)</returns>
-        public int getValue()
+        public int GetValue()
         {
             return value;
         }
