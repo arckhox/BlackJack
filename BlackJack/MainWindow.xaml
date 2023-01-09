@@ -66,7 +66,7 @@
             <Button x:Name="newGameButton" Margin="30" Content="New Game" MinWidth="200" MinHeight="40" Background="#FF00FFED" Click="newGameButton_Click"/>
         </WrapPanel>
         <Label x:Name="statusTextLabel" Grid.Row="3"  Content="Round Started" HorizontalAlignment="Center" VerticalAlignment="Center"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" />
-        <Button x:Name="historyTextLabel" Grid.Row="4" Content="Last Round Info: null"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20"  />
+        <Button x:Name="historyTextLabel" Grid.Row="4" Content="Last Round Info: null"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" Click="historyTextLabel_Click"  />
         <Label x:Name="timeTextLabel" Grid.Row="5" Content="00:00:00"  Background="#000" Foreground="White" BorderBrush="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 

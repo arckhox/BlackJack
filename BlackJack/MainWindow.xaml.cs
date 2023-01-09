@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +31,7 @@ namespace BlackJack
         private List<String> dealerCards;
         private List<String> playerCards;
         private int roundNumber = 0;
+        private List<RoundInfo> historyList;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +39,7 @@ namespace BlackJack
             dealerCardsImages = new List<Image>();
             dealerCards = new List<string>();
             playerCards = new List<string>();
+            historyList = new List<RoundInfo>();
             int deckCount = 1;
             blackJack = new Game(deckCount);
             blackJack.initiateGame();
@@ -63,16 +67,14 @@ namespace BlackJack
             string playerbetValue = playerBet.ToString();
             restartGame();
             pickCard(true); // pass true if the card picked is for the dealer
-            //dealerCardsView.Children.add
             pickCard(false);
             pickCard(false);
             playerScoreLabel.Content = blackJack.getPlayerScore();
-            updateBalance();
             dealerScoreLabel.Content = blackJack.getDealerScore();
-            dealButton.IsEnabled = false;
-            playerBetLabel.Content = playerbetValue;
             updateBalance();
+            dealButton.IsEnabled = false;
             playerBetSlider.IsEnabled = false;
+            playerBetLabel.Content = playerbetValue;
             statusTextLabel.Background = Brushes.Black;
             statusTextLabel.Content = "Hit Or Stand? ;)";
             if (blackJack.getPlayerScore() == 21)
@@ -86,22 +88,24 @@ namespace BlackJack
 
         private void hitButton_Click(object sender, RoutedEventArgs e)
         {
-            playerScoreLabel.Visibility = Visibility.Hidden;
-            dealerScoreLabel.Visibility = Visibility.Hidden;
-            statusTextLabel.Visibility = Visibility.Hidden;
+            hideScoreLabels(true);
             pickCard(false);
             playerScoreLabel.Content = blackJack.getPlayerScore();
+            hitButton.IsEnabled = false;
+            standButton.IsEnabled = false;
             if (blackJack.getPlayerScore() > 21)
-            {
-                hitButton.IsEnabled = false;
-                standButton.IsEnabled = false;
+            {  
                 gameLost();
             }
             else if (blackJack.getPlayerScore() == 21)
             {
-                hitButton.IsEnabled = false;
-                standButton.IsEnabled = false;
+                
                 standButton_Click(null, null);
+            }
+            else
+            {
+                hitButton.IsEnabled = true;
+                standButton.IsEnabled = true;
             }
         }
 
@@ -111,9 +115,7 @@ namespace BlackJack
             {
                 return;
             }
-            playerScoreLabel.Visibility = Visibility.Hidden;
-            dealerScoreLabel.Visibility = Visibility.Hidden;
-            statusTextLabel.Visibility = Visibility.Hidden;
+            hideScoreLabels(true);
             while (blackJack.getDealerScore() < 16)
             {
                 pickCard(true);
@@ -185,7 +187,7 @@ namespace BlackJack
             {
                 string playerBet = playerBetLabel.Content.ToString();
                 statusTextLabel.Content = "You lost " + playerBet;
-                historyTextLabel.Content = "Last Round Info: You lost " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
+                updateHistory(false, playerBet);
                 hitButton.IsEnabled = false;
                 standButton.IsEnabled = false;
                 playerBetSlider.IsEnabled = true;
@@ -199,7 +201,7 @@ namespace BlackJack
         {
             string playerBet = playerBetLabel.Content.ToString();
             statusTextLabel.Content = "You Won " + playerBet;
-            historyTextLabel.Content = "Last Round Info: You Won " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
+            updateHistory(true, playerBet);
             statusTextLabel.Background = Brushes.DarkGreen;
             blackJack.changeBalance((Convert.ToInt32(playerBetLabel.Content)) * 2); // als de player wint dan krijgt hij 2x zijn bet terug
             updateBalance();
@@ -327,9 +329,7 @@ namespace BlackJack
                         doubleDownButton.IsEnabled = true;
                     }
                 }
-                playerScoreLabel.Visibility = Visibility.Visible;
-                dealerScoreLabel.Visibility = Visibility.Visible;
-                statusTextLabel.Visibility = Visibility.Visible;
+                hideScoreLabels(false);
             }
             // Forcing the CommandManager to raise the RequerySuggested event
             CommandManager.InvalidateRequerySuggested();
@@ -339,6 +339,57 @@ namespace BlackJack
         {
             playerBalanceLabel.Content = blackJack.getBalance();
         }
+        private void updateHistory(bool playerWon, string playerBet)
+        {
+            RoundInfo tempInfo;
+            if (playerWon)
+            {
+                historyTextLabel.Content = "Last Round Info: You Won " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
+                tempInfo = new RoundInfo(roundNumber,Convert.ToInt32(playerBet), blackJack.getPlayerScore(), blackJack.getDealerScore(), true);
+            }
+            else
+            {
+                historyTextLabel.Content = "Last Round Info: You lost " + playerBet + " With Player " + blackJack.getPlayerScore() + " and Dealer " + blackJack.getDealerScore();
+                tempInfo = new RoundInfo(roundNumber, Convert.ToInt32(playerBet), blackJack.getPlayerScore(), blackJack.getDealerScore(), false);
+            }
+            historyList.Add(tempInfo);
+        }
 
+        private void historyTextLabel_Click(object sender, RoutedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            int counter = 0;
+            for (int i = (historyList.Count - 1); i >= 0; i--)
+            {
+                counter++;
+                if (counter!=10)
+                {
+                    sb.AppendLine(historyList.ElementAt(i).getString());
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            MessageBox.Show(sb.ToString());
+        }
+        private void hideScoreLabels(bool toHide)
+        {
+            if (toHide)
+            {
+                playerScoreLabel.Visibility = Visibility.Hidden;
+                dealerScoreLabel.Visibility = Visibility.Hidden;
+                statusTextLabel.Visibility = Visibility.Hidden;
+                historyTextLabel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                playerScoreLabel.Visibility = Visibility.Visible;
+                dealerScoreLabel.Visibility = Visibility.Visible;
+                statusTextLabel.Visibility = Visibility.Visible;
+                historyTextLabel.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
